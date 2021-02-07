@@ -27,14 +27,15 @@
 		{
 			$url = trim($_SERVER['REQUEST_URI'], '/');
 
+			$path = parse_url($url, PHP_URL_PATH);
+
 			foreach ($this->routes as $route => $params) {
-				if (preg_match($route, $url, $matches)){
+				if (preg_match($route, $path, $matches)){
 					$this->params = $params;
 
 					return true;
 				}
 			}
-
 			return false;
 		}
 
