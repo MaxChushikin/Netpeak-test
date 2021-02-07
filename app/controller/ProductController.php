@@ -11,6 +11,8 @@
 		{
 			$data['test'] = 'test';
 
+			$this->model->getProducts();
+
 			echo $this->view->render('product/product_list', $data);
 		}
 
