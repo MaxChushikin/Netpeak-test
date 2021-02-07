@@ -41,18 +41,25 @@
 		public function run ()
 		{
 			if ($this->match()) {
-				$controller = 'app\controller\\' . ucfirst($this->params['controller']) . 'Controller.php';
 
-				if (class_exists($controller)){
-					echo 'Class isset';
+				$class_name = ucfirst($this->params['controller']) . 'Controller';
+				$path = 'app\controller\\' . $class_name;
+
+				if (class_exists($path)){
+
+					$action = $this->params['action'];
+					
+					if (method_exists($path, $action)){
+
+					} else {
+						exit("Method $action not found");
+					}
 				} else {
-					exit('Class not found');
+					exit("Class $class_name not found");
 				}
 
-
-				echo $controller;
 			} else {
-				echo '404';
+				exit('Page not found');
 			}
 		}
 	}
