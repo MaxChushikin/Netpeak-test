@@ -11,7 +11,10 @@
 		{
 			$data['test'] = 'test';
 
-			$this->model->getProducts();
+			$product_model = $this->model->load('product');
+			$user_model = $this->model->load('user');
+
+			$product_model->getProducts();
 
 			echo $this->view->render('product/product_list', $data);
 		}
