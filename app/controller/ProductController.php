@@ -9,6 +9,9 @@
 		public function listAction ()
 		{
 
+			$data['test'] = 'test';
+
+			echo $this->view->render('product/product_list', $data);
 		}
 
 		public function addAction ()
