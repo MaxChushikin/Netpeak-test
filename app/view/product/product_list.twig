@@ -1,46 +1,41 @@
 {% extends 'layout/index.twig' %}
 
 {% block body %}
-    <table class="table table-striped">
-        <thead class="thead-dark">
-        <tr>
-            <th scope="col">#</th>
-            <th scope="col">Название</th>
-            <th scope="col">Изображение</th>
-            <th scope="col">Добавлено</th>
-            <th scope="col">Автор</th>
-            <th scope="col">Кол-во отзывов</th>
-            <th width="120px"></th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr>
-            <td>id</td>
-            <td>name</td>
-            <td>image</td>
-            <td>date_added</td>
-            <td>user</td>
-            <td>review_count</td>
-            <td>
-                <a class="btn btn-primary" href=""><span class="fa fa-edit"></span></a>
-                <a class="btn btn-danger" href="" onclick="return confirm('Are you sure you want to delete?');"><span class="fa fa-trash"></span></a>
-            </td>
-        </tr>
+    {% if products %}
+        <table class="table table-striped">
+            <thead class="thead-dark">
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Название</th>
+                <th scope="col">Изображение</th>
+                <th scope="col">Добавлено</th>
+                <th scope="col">Автор</th>
+                <th scope="col">Кол-во отзывов</th>
+                <th width="120px"></th>
+            </tr>
+            </thead>
+            <tbody>
 
-        {% for product in products %}
-        <tr>
-            <td>{{ product.id }}</td>
-            <td>{{ product.name }}</td>
-            <td>{{ product.image }}</td>
-            <td>{{ product.date_added }}</td>
-            <td>{{ product.user }}</td>
-            <td>{{ product.review_count }}</td>
-            <td>
-                <a class="btn btn-primary" href="{{ product.edit }}"><span class="fa fa-edit"></span></a>
-                <a class="btn btn-danger" href="{{ product.delete }}" onclick="return confirm('Are you sure you want to delete {{ product.name }}?');"><span class="fa fa-trash"></span></a>
-            </td>
-        </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+            {% for product in products %}
+                <tr>
+                    <td>{{ product.id }}</td>
+                    <td>{{ product.name }}</td>
+                    <td>{{ product.image }}</td>
+                    <td>{{ product.date_added }}</td>
+                    <td>{{ product.user }}</td>
+                    <td>{{ product.total_reviews }}</td>
+                    <td>
+                        <a class="btn btn-primary" href="{{ product.edit }}"><span class="fa fa-edit"></span></a>
+                        <a class="btn btn-danger" href="{{ product.delete }}" onclick="return confirm('Are you sure you want to delete {{ product.name }}?');"><span class="fa fa-trash"></span></a>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <div class="alert alert-warning" role="alert">
+            Товаров нет!
+        </div>
+    {% endif %}
+
 {% endblock %}

@@ -7,11 +7,10 @@
 	class User extends Model
 	{
 
-		public function getProducts ()
+		public function getUser ($user_id)
 		{
-			echo '<pre style="background: #272727; padding: 10px 15px; color: #088000; text-align: left; font-size: 13px;">';
-			    var_dump ($this->db);
-			echo '</pre>';
-			die ();
+			$query = $this->db->query('SELECT * FROM `user` WHERE `user_id` = "' . $user_id . '" LIMIT 1');
+
+			return	($query->num_rows) ? $query->row : false;
 		}
 	}

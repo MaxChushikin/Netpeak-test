@@ -6,12 +6,10 @@
 
 	class Review extends Model
 	{
-
-		public function getProducts ()
+		public function getTotalReviewsByProductId ($product_id)
 		{
-			echo '<pre style="background: #272727; padding: 10px 15px; color: #088000; text-align: left; font-size: 13px;">';
-			    var_dump ($this->db);
-			echo '</pre>';
-			die ();
+			$query = $this->db->query('SELECT count(review_id) as total FROM `review` WHERE product_id = ' . $product_id );
+
+			return	($query->num_rows) ? $query->row['total'] : 0;
 		}
 	}

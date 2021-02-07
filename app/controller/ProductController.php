@@ -14,7 +14,7 @@
 
 			$product_model = $this->model->load('product');
 			$user_model = $this->model->load('user');
-			$review_model = $this->model->load('user');
+			$review_model = $this->model->load('review');
 
 			$products = $product_model->getProducts();
 
@@ -24,9 +24,8 @@
 				foreach ($products as $product) {
 
 					$image = (isset($product['image']) && file_exists('/public/image/' . $product['image'])) ? '/public/image/' . $product['image'] : '/public/image/no-image.jpeg';
-					$date_added = date('Y m d', $product['data_added']);
-					$user_info = $user_model->getUser($product['user_id']);
-					$user = (isset($user_info['name']) && !empty($user_info['name'])) ? $user_info['name'] : 'Strange Alien';
+					$date_added = date('Y m d', strtotime($product['date_added']));
+					$user = ($product['user_name'] && !empty($product['user_name'])) ? $product['user_name'] : 'Strange Alien';
 					$total_reviews = $review_model->getTotalReviewsByProductId($product['product_id']);
 
 					$data['products'][] = [
