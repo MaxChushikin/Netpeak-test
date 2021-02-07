@@ -2,7 +2,9 @@
 
 	namespace app\controller;
 
-	class ProductController
+	use app\core\Controller;
+
+	class ProductController extends Controller
 	{
 		public function listAction ()
 		{
