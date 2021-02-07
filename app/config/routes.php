@@ -1,9 +1,9 @@
 <?php
 
 	return [
-		'/' => [
+		'' => [
 			'controller' 	=> 'product',
-			'action' 		=> 'index'
+			'action' 		=> 'list'
 		],
 		'product/add' => [
 			'controller' 	=> 'product',
