@@ -27,9 +27,10 @@
 					$date_added = date('Y m d', $product['data_added']);
 					$user_info = $user_model->getUser($product['user_id']);
 					$user = (isset($user_info['name']) && !empty($user_info['name'])) ? $user_info['name'] : 'Strange Alien';
-					$total_reviews = $review_model->getTotalReviewsByProductId;
+					$total_reviews = $review_model->getTotalReviewsByProductId($product['product_id']);
 
 					$data['products'][] = [
+						'product_id' 	=> $product['product_id'],
 						'name' 			=> $product['name'],
 						'image' 		=> $image,
 						'date_added' 	=> $date_added,
