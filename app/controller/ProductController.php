@@ -75,8 +75,6 @@
 
 		public function addAction ()
 		{
-
-
 			$data = [];
 			$data['title'] = 'Нобавить новый товар';
 
@@ -189,11 +187,13 @@
 			$users = $user_model->getUsers();
 
 			if ($_POST['user_id']){
-				if (array_search($_POST['user_id'], array_column($users, 'user_id')) == false){
+				if (array_search($_POST['user_id'], array_column($users, 'user_id')) === false){
 					$this->error['user'] = 'Такого автора у нас нет';
 				}
 			} else {
 				$this->error['user'] = 'Необходимо выбрать автора';
 			}
+
+			return !$this->error;
 		}
 	}

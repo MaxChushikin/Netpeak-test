@@ -6,6 +6,13 @@
 
 	class Product extends Model
 	{
+		public function addProduct ($data)
+		{
+			$this->db->query("INSERT INTO `product` SET `name` = '" . $this->db->escape($data['name']) . "', `price` = '" . (float)$data['price'] . "', `image` = '" . $this->db->escape($data['image']) . "', `user_id` = '" . (int)$data['user_id'] . "', `date_added` = NOW()");
+
+			return $this->db->getLastId();
+		}
+
 		public function getProducts ($data)
 		{
 			$sql = 'SELECT *, p.name, u.name as user_name FROM `product` p LEFT JOIN `user` u on (p.user_id = u.user_id)';
@@ -33,4 +40,5 @@
 
 			return	($query->num_rows) ? $query->rows : false;
 		}
+
 	}
