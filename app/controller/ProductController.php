@@ -3,20 +3,27 @@
 	namespace app\controller;
 
 	use app\core\Controller;
-	use app\lib\Db;
 
 	class ProductController extends Controller
 	{
 		public function listAction ()
 		{
+
+			$sort = (isset($_GET['sort'])) ? $_GET['sort'] : 'p.product_id';
+			$order = (isset($_GET['order'])) ? $_GET['order'] : 'DESC';
+
 			$data = [];
 			$data['title'] = 'Product list';
 
 			$product_model = $this->model->load('product');
-			$user_model = $this->model->load('user');
 			$review_model = $this->model->load('review');
 
-			$products = $product_model->getProducts();
+			$filter_data = array(
+				'sort'            => $sort,
+				'order'           => $order,
+			);
+
+			$products = $product_model->getProducts($filter_data);
 
 			$data['products'] = [];
 
@@ -39,7 +46,25 @@
 				}
 			}
 
-			$product_model->getProducts();
+//			sort-order links
+			$url = '';
+
+			$url .= ($order == 'ASC') ? '&order=DESC' : '&order=ASC';
+
+			if ($order == 'ASC') {
+				$url .= '&order=DESC';
+			} else {
+				$url .= '&order=ASC';
+			}
+
+			$data['sort_product_id'] = '/' . '?sort=p.product_id' . $url;
+			$data['sort_name'] = '/' . '?sort=p.name' . $url;
+			$data['sort_date_added'] = '/' . '?sort=p.date_added' . $url;
+			$data['sort_user'] = '/' . '?sort=u.name' . $url;
+			$data['sort_reviews'] = '/' . '?sort=r.total_reviews' . $url;
+
+			$data['sort'] = $sort;
+			$data['order'] = $order;
 
 			echo $this->view->render('product/product_list', $data);
 		}

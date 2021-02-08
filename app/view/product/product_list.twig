@@ -3,19 +3,18 @@
 {% block body %}
     {% if products %}
         <table class="table table-striped">
-            <thead class="thead-dark">
+            <thead>
             <tr>
-                <th scope="col">#</th>
-                <th scope="col">Название</th>
+                <th><a href="{{ sort_product_id }}"># <i class="{% if sort == 'p.product_id' %}fa fa-sort{% endif %}"></i></a></th>
+                <th scope="col"><a href="{{ sort_name }}">Название <i class="{% if sort == 'p.name' %}fa fa-sort{% endif %}"></i></a></th>
                 <th scope="col">Изображение</th>
-                <th scope="col">Добавлено</th>
-                <th scope="col">Автор</th>
-                <th scope="col">Кол-во отзывов</th>
+                <th scope="col"><a href="{{ sort_date_added }}">Добавлено <i class="{% if sort == 'p.date_added' %}fa fa-sort{% endif %}"></i></a></th>
+                <th scope="col"><a href="{{ sort_user }}">Автор <i class="{% if sort == 'u.name' %}fa fa-sort{% endif %}"></i></a></th>
+                <th scope="col"><a href="{{ sort_reviews }}">Кол-во отзывов <i class="{% if sort == 'r.count_reviews' %}fa fa-sort{% endif %}"></i></a></th>
                 <th width="120px"></th>
             </tr>
             </thead>
             <tbody>
-
             {% for product in products %}
                 <tr>
                     <td>{{ product.id }}</td>

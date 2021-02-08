@@ -1,0 +1,8 @@
+.table a.asc:before {
+    content: "\f0dd";
+    font-family: FontAwesome;
+}
+.table a.desc:before {
+    content: "\f0de";
+    font-family: FontAwesome;
+}
