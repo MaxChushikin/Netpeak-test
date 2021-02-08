@@ -13,6 +13,20 @@
 			return $this->db->getLastId();
 		}
 
+		public function editProduct ($product_id, $data)
+		{
+			$this->db->query("UPDATE `product` SET `name` = '" . $this->db->escape($data['name']) . "', `price` = '" . (float)$data['price'] . "', `image` = '" . $this->db->escape($data['image']) . "', `user_id` = '" . (int)$data['user_id'] . "', `date_added` = NOW() WHERE `product_id` = " . $product_id);
+
+			return $this->db->getLastId();
+		}
+
+		public function getProduct ($product_id)
+		{
+			$query = $this->db->query('SELECT *, p.name, u.name as user_name FROM `product` p LEFT JOIN `user` u on (p.user_id = u.user_id) WHERE `product_id` = ' . $product_id . ' LIMIT 1');
+
+			return	($query->num_rows) ? $query->row : false;
+		}
+
 		public function getProducts ($data)
 		{
 			$sql = 'SELECT *, p.name, u.name as user_name FROM `product` p LEFT JOIN `user` u on (p.user_id = u.user_id)';

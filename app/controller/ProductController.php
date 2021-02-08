@@ -100,7 +100,7 @@
 			if (($_SERVER['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
 
 				$product_model = $this->model->load('product');
-				$product_model->addProduct($_POST);
+				$product_model->editProduct($_GET['product_id'], $_POST);
 
 				// todo: add message to session
 
@@ -116,19 +116,19 @@
 		public function getForm ()
 		{
 
-			if (!isset($_POST['product_id'])) {
+			if (!isset($_GET['product_id'])) {
 				$data['action'] = '/product/add/';
 			} else {
-				$data['action'] = '/product/edit?product_id=' . $_POST['product_id'];
+				$data['action'] = '/product/edit?product_id=' . $_GET['product_id'];
 			}
 
 			if (isset($this->error)) {
 				$data['error'] = $this->error;
 			}
 
-			if (isset($_POST['product_id']) && ($_SERVER['REQUEST_METHOD'] != 'POST')) {
+			if (isset($_GET['product_id']) && ($_SERVER['REQUEST_METHOD'] != 'POST')) {
 				$product_model = $this->model->load('product');
-				$product_info = $product_model->getProduct($_POST['product_id']);
+				$product_info = $product_model->getProduct($_GET['product_id']);
 			}
 
 			if (isset($_POST['name'])) {
