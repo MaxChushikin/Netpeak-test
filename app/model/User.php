@@ -13,4 +13,11 @@
 
 			return	($query->num_rows) ? $query->row : false;
 		}
+
+		public function getUsers ()
+		{
+			$query = $this->db->query('SELECT * FROM `user`');
+
+			return	($query->num_rows) ? $query->rows : false;
+		}
 	}

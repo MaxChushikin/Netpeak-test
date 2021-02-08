@@ -9,6 +9,10 @@
 			'controller' 	=> 'product',
 			'action' 		=> 'add'
 		],
+		'product/edit' => [
+			'controller' 	=> 'product',
+			'action' 		=> 'edit'
+		],
 		'review' => [
 			'controller' 	=> 'review',
 			'action' 		=> 'index'

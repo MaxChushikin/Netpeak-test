@@ -42,6 +42,8 @@
 						'date_added' 	=> $date_added,
 						'user' 			=> $user,
 						'total_reviews' => $total_reviews,
+						'edit' 			=> '/product/edit/?product_id=' . $product['product_id'],
+						'delete' 		=> '/product/delete/?product_id=' . $product['product_id'],
 					];
 				}
 			}
@@ -70,6 +72,91 @@
 		}
 
 		public function addAction ()
+		{
+			$data = [];
+			$data['title'] = 'Нобавить новый товар';
+
+			if (($_SERVER['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
+
+				$product_model = $this->model->load('product');
+				$product_model->addProduct($_POST);
+
+				// todo: add message to session
+
+				header("HTTP/1.1 301 Moved Permanently");
+				header("Location: /");
+				exit();
+			}
+
+			$this->getForm();
+		}
+
+		public function editAction ()
+		{
+			$data['title'] = 'Редактировать товар';
+
+			if (($_SERVER['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
+
+				$product_model = $this->model->load('product');
+				$product_model->addProduct($_POST);
+
+				// todo: add message to session
+
+				header("HTTP/1.1 301 Moved Permanently");
+				header("Location: /");
+				exit();
+			}
+
+			$this->getForm();
+		}
+
+
+		public function getForm ()
+		{
+			if (isset($_GET['product_id']) && ($_SERVER['REQUEST_METHOD'] != 'POST')) {
+				$product_model = $this->model->load('product');
+				$product_info = $product_model->getProduct($_GET['product_id']);
+			}
+
+			if (isset($_POST['name'])) {
+				$data['name'] = $_POST['name'];
+			} elseif (!empty($product_info)) {
+				$data['name'] = $product_info['name'];
+			} else {
+				$data['name'] = '';
+			}
+
+			if (isset($_POST['image'])) {
+				$data['image'] = $_POST['image'];
+			} elseif (!empty($product_info)) {
+				$data['image'] = $product_info['image'];
+			} else {
+				$data['image'] = '';
+			}
+
+			if (isset($_POST['price'])) {
+				$data['price'] = $_POST['price'];
+			} elseif (!empty($product_info)) {
+				$data['price'] = $product_info['price'];
+			} else {
+				$data['price'] = '';
+			}
+
+			$user_model = $this->model->load('user');
+			$data['users'] = $user_model->getUsers();
+
+			if (isset($_POST['user_id'])) {
+				$data['user_id'] = $_POST['user_id'];
+			} elseif (!empty($product_info)) {
+				$data['user_id'] = $product_info['user_id'];
+			} else {
+				$data['user_id'] = '';
+			}
+
+			echo $this->view->render('product/product_form', $data);
+		}
+
+		public function validateForm ()
 		{
 
 		}

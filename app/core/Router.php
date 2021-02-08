@@ -28,6 +28,7 @@
 			$url = trim($_SERVER['REQUEST_URI'], '/');
 
 			$path = parse_url($url, PHP_URL_PATH);
+			$query = parse_url($url, PHP_URL_QUERY);
 
 			foreach ($this->routes as $route => $params) {
 				if (preg_match($route, $path, $matches)){
