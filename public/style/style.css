@@ -1,3 +1,7 @@
+header {
+    margin-bottom: 50px;
+}
+
 #product-list-table tbody tr{
     height: 75px;
 }
@@ -8,4 +12,8 @@
 
 #product-list-table tr img{
     max-height: 50px;
+}
+
+#product-review-table .product-name {
+    font-size: 22px;
 }

@@ -15,27 +15,29 @@
 
 		public function editProduct ($product_id, $data)
 		{
-			$this->db->query("UPDATE `product` SET `name` = '" . $this->db->escape($data['name']) . "', `price` = '" . (float)$data['price'] . "', `image` = '" . $this->db->escape($data['image']) . "', `user_id` = '" . (int)$data['user_id'] . "', `date_added` = NOW() WHERE `product_id` = " . $product_id);
+			$this->db->query("UPDATE `product` SET `name` = '" . $this->db->escape($data['name']) . "', `price` = '" . (float)$data['price'] . "', `image` = '" . $this->db->escape($data['image']) . "', `user_id` = '" . (int)$data['user_id'] . "' WHERE `product_id` = " . (int)$product_id);
 
 			return $product_id;
 		}
 
 		public function getProduct ($product_id)
 		{
-			$query = $this->db->query('SELECT *, p.name, u.name as user_name FROM `product` p LEFT JOIN `user` u on (p.user_id = u.user_id) WHERE `product_id` = ' . $product_id . ' LIMIT 1');
+			$query = $this->db->query('SELECT *, p.name, u.name as user_name FROM `product` p LEFT JOIN `user` u on (p.user_id = u.user_id) WHERE `product_id` = ' . (int)$product_id . ' LIMIT 1');
 
 			return	($query->num_rows) ? $query->row : false;
 		}
 
-		public function getProducts ($data)
+		public function getProducts ($data = [])
 		{
-			$sql = 'SELECT *, p.name, u.name as user_name FROM `product` p LEFT JOIN `user` u on (p.user_id = u.user_id)';
+			$sql = 'SELECT *, p.name, u.name as user_name, (SELECT COUNT(*) FROM review r WHERE r.product_id = p.product_id) as `review_total` FROM `product` p LEFT JOIN `user` u on (p.user_id = u.user_id)';
 
 			$sort_data = array(
 				'p.name',
 				'p.product_id',
 				'p.date_added',
 				'u.name',
+				'user_name',
+				'review_total',
 			);
 
 			if (isset($data['sort']) && in_array($data['sort'], $sort_data)) {

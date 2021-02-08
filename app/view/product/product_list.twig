@@ -1,4 +1,6 @@
 {% extends 'layout/index.twig' %}
+{% block title %}{{ title }}{% endblock %}
+{% block h1 %}{{ title }}{% endblock %}
 
 {% block body %}
     {% if products %}
@@ -9,15 +11,15 @@
                 <th class="text-center" scope="col"><a href="{{ sort_name }}">Название <i class="{% if sort == 'p.name' %}fa fa-sort{% endif %}"></i></a></th>
                 <th class="text-center" scope="col">Изображение</th>
                 <th class="text-center" scope="col"><a href="{{ sort_date_added }}">Добавлено <i class="{% if sort == 'p.date_added' %}fa fa-sort{% endif %}"></i></a></th>
-                <th class="text-center" scope="col"><a href="{{ sort_user }}">Автор <i class="{% if sort == 'u.name' %}fa fa-sort{% endif %}"></i></a></th>
-                <th class="text-center" scope="col"><a href="{{ sort_reviews }}">Кол-во отзывов <i class="{% if sort == 'r.count_reviews' %}fa fa-sort{% endif %}"></i></a></th>
+                <th class="text-center" scope="col"><a href="{{ sort_user }}">Автор <i class="{% if sort == 'user_name' %}fa fa-sort{% endif %}"></i></a></th>
+                <th class="text-center" scope="col"><a href="{{ sort_reviews }}">Кол-во отзывов <i class="{% if sort == 'review_total' %}fa fa-sort{% endif %}"></i></a></th>
                 <th width="120px"></th>
             </tr>
             </thead>
             <tbody>
             {% for product in products %}
                 <tr>
-                    <td>{{ product.id }}</td>
+                    <td>{{ product.product_id }}</td>
                     <td>{{ product.name }}</td>
                     <td class="text-center"><img src="{{ product.image }}" alt="{{ product.name }}" class="mx-auto img-thumbnail" height="90"></td>
                     <td class="text-center">{{ product.date_added }}</td>

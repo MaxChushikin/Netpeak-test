@@ -15,10 +15,14 @@
 		],
 		'review' => [
 			'controller' 	=> 'review',
-			'action' 		=> 'index'
+			'action' 		=> 'list'
 		],
 		'review/add' => [
 			'controller' 	=> 'review',
 			'action' 		=> 'add'
+		],
+		'review/edit' => [
+			'controller' 	=> 'review',
+			'action' 		=> 'edit'
 		],
 	];

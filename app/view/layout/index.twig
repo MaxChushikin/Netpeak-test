@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>{% block title %}Netpeak!{% endblock %}</title>
+
     {% block stylesheets %}
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css"
               integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4"
@@ -36,26 +37,28 @@
         <script src="/public/script/script.js"></script>
     {% endblock %}
 </head>
-
+<header>
+    <nav class="navbar navbar-expand-lg navbar-light bg-primary">
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="/">Главная</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/review/">Отзывы</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/product/add/">Добавить продукт</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+</header>
 <div class="container">
+    <h1>{% block h1 %}Welcome!{% endblock %}</h1>
 
-    <header>
-        <ul class="nav">
-            <li class="nav-item">
-                <a class="nav-link active" href="#">Главная</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">Отзывы</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="/product/add/">Добавить продукт</a>
-            </li>
-        </ul>
-    </header>
     <div class="wrapper">
         <div id="content">
-
-
             {% block body %}{% endblock %}
         </div>
     </div>

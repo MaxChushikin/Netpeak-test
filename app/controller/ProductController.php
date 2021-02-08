@@ -11,8 +11,8 @@
 		public function listAction ()
 		{
 
-			$sort = (isset($_POST['sort'])) ? $_POST['sort'] : 'p.product_id';
-			$order = (isset($_POST['order'])) ? $_POST['order'] : 'DESC';
+			$sort = (isset($_GET['sort'])) ? $_GET['sort'] : 'p.product_id';
+			$order = (isset($_GET['order'])) ? $_GET['order'] : 'DESC';
 
 			$data = [];
 			$data['title'] = 'Product list';
@@ -31,9 +31,8 @@
 
 			if ($products) {
 				foreach ($products as $product) {
-
 					$image = (isset($product['image']) && !empty($product['image'])) ? $product['image'] : '/public/image/no-image.png';
-					$date_added = date('Y m d', strtotime($product['date_added']));
+					$date_added = date('d m Y', strtotime($product['date_added']));
 					$user = ($product['user_name'] && !empty($product['user_name'])) ? $product['user_name'] : 'Strange Alien';
 					$total_reviews = $review_model->getTotalReviewsByProductId($product['product_id']);
 
@@ -44,6 +43,7 @@
 						'date_added' 	=> $date_added,
 						'user' 			=> $user,
 						'total_reviews' => $total_reviews,
+						'review' 		=> '/review/?product_id=' . $product['product_id'],
 						'edit' 			=> '/product/edit/?product_id=' . $product['product_id'],
 						'delete' 		=> '/product/delete/?product_id=' . $product['product_id'],
 					];
@@ -55,17 +55,11 @@
 
 			$url .= ($order == 'ASC') ? '&order=DESC' : '&order=ASC';
 
-			if ($order == 'ASC') {
-				$url .= '&order=DESC';
-			} else {
-				$url .= '&order=ASC';
-			}
-
-			$data['sort_product_id'] = '/' . '?sort=p.product_id' . $url;
-			$data['sort_name'] = '/' . '?sort=p.name' . $url;
-			$data['sort_date_added'] = '/' . '?sort=p.date_added' . $url;
-			$data['sort_user'] = '/' . '?sort=u.name' . $url;
-			$data['sort_reviews'] = '/' . '?sort=r.total_reviews' . $url;
+			$data['sort_product_id']		= '/' . '?sort=p.product_id' . $url;
+			$data['sort_name'] 				= '/' . '?sort=p.name' . $url;
+			$data['sort_date_added'] 		= '/' . '?sort=p.date_added' . $url;
+			$data['sort_user'] 				= '/' . '?sort=user_name' . $url;
+			$data['sort_reviews'] 			= '/' . '?sort=review_total' . $url;
 
 			$data['sort'] = $sort;
 			$data['order'] = $order;
@@ -75,9 +69,6 @@
 
 		public function addAction ()
 		{
-			$data = [];
-			$data['title'] = 'Нобавить новый товар';
-
 			if (($_SERVER['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
 
 				$product_model = $this->model->load('product');
@@ -95,8 +86,6 @@
 
 		public function editAction ()
 		{
-			$data['title'] = 'Редактировать товар';
-
 			if (($_SERVER['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
 
 				$product_model = $this->model->load('product');
@@ -115,11 +104,12 @@
 
 		public function getForm ()
 		{
-
 			if (!isset($_GET['product_id'])) {
 				$data['action'] = '/product/add/';
+				$data['title'] = 'Добавить новый товар';
 			} else {
 				$data['action'] = '/product/edit?product_id=' . $_GET['product_id'];
+				$data['title'] = 'Редактировать товар';
 			}
 
 			if (isset($this->error)) {
