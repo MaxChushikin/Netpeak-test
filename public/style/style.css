@@ -1,8 +1,11 @@
-.table a.asc:before {
-    content: "\f0dd";
-    font-family: FontAwesome;
+#product-list-table tbody tr{
+    height: 75px;
 }
-.table a.desc:before {
-    content: "\f0de";
-    font-family: FontAwesome;
+
+#product-list-table tr td{
+    vertical-align: middle;
+}
+
+#product-list-table tr img{
+    max-height: 50px;
 }

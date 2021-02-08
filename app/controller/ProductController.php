@@ -32,7 +32,7 @@
 			if ($products) {
 				foreach ($products as $product) {
 
-					$image = (isset($product['image']) && file_exists('/public/image/' . $product['image'])) ? '/public/image/' . $product['image'] : '/public/image/no-image.jpeg';
+					$image = (isset($product['image']) && !empty($product['image'])) ? $product['image'] : '/public/image/no-image.png';
 					$date_added = date('Y m d', strtotime($product['date_added']));
 					$user = ($product['user_name'] && !empty($product['user_name'])) ? $product['user_name'] : 'Strange Alien';
 					$total_reviews = $review_model->getTotalReviewsByProductId($product['product_id']);

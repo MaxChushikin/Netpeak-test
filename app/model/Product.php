@@ -17,7 +17,7 @@
 		{
 			$this->db->query("UPDATE `product` SET `name` = '" . $this->db->escape($data['name']) . "', `price` = '" . (float)$data['price'] . "', `image` = '" . $this->db->escape($data['image']) . "', `user_id` = '" . (int)$data['user_id'] . "', `date_added` = NOW() WHERE `product_id` = " . $product_id);
 
-			return $this->db->getLastId();
+			return $product_id;
 		}
 
 		public function getProduct ($product_id)
