@@ -177,8 +177,8 @@
 				$this->error['name'] = 'Название товара обязательно и должно быть от 2 до 256 символов';
 			}
 
-			if (isset($_POST['name']) && !filter_var($_POST['image'], FILTER_VALIDATE_URL)){
-				$this->error['name'] = 'Ссылка указана некорректно';
+			if (isset($_POST['image']) && !filter_var($_POST['image'], FILTER_VALIDATE_URL)){
+				$this->error['image'] = 'Ссылка указана некорректно';
 			}
 
 			if (isset($_POST['price']) && !filter_var($_POST['price'], FILTER_SANITIZE_NUMBER_FLOAT)){
@@ -194,10 +194,6 @@
 				}
 			} else {
 				$this->error['user'] = 'Необходимо выбрать автора';
-			}
-
-			if (!isset($_POST['name']) && !filter_var($_POST['image'], FILTER_VALIDATE_URL)){
-				$this->error['name'] = 'Ссылка указана некорректно';
 			}
 		}
 	}
