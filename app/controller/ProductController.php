@@ -6,6 +6,8 @@
 
 	class ProductController extends Controller
 	{
+		private $error = [];
+
 		public function listAction ()
 		{
 
@@ -73,6 +75,8 @@
 
 		public function addAction ()
 		{
+
+
 			$data = [];
 			$data['title'] = 'Нобавить новый товар';
 
@@ -113,6 +117,13 @@
 
 		public function getForm ()
 		{
+
+			if (!isset($_GET['product_id'])) {
+				$data['action'] = '/product/add/';
+			} else {
+				$data['action'] = '/product/edit?product_id=' . $_GET['product_id'];
+			}
+
 			if (isset($_GET['product_id']) && ($_SERVER['REQUEST_METHOD'] != 'POST')) {
 				$product_model = $this->model->load('product');
 				$product_info = $product_model->getProduct($_GET['product_id']);
@@ -158,6 +169,5 @@
 
 		public function validateForm ()
 		{
-
 		}
 	}
