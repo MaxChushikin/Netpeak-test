@@ -11,8 +11,8 @@
 		public function listAction ()
 		{
 
-			$sort = (isset($_GET['sort'])) ? $_GET['sort'] : 'p.product_id';
-			$order = (isset($_GET['order'])) ? $_GET['order'] : 'DESC';
+			$sort = (isset($_POST['sort'])) ? $_POST['sort'] : 'p.product_id';
+			$order = (isset($_POST['order'])) ? $_POST['order'] : 'DESC';
 
 			$data = [];
 			$data['title'] = 'Product list';
@@ -118,15 +118,19 @@
 		public function getForm ()
 		{
 
-			if (!isset($_GET['product_id'])) {
+			if (!isset($_POST['product_id'])) {
 				$data['action'] = '/product/add/';
 			} else {
-				$data['action'] = '/product/edit?product_id=' . $_GET['product_id'];
+				$data['action'] = '/product/edit?product_id=' . $_POST['product_id'];
 			}
 
-			if (isset($_GET['product_id']) && ($_SERVER['REQUEST_METHOD'] != 'POST')) {
+			if (isset($this->error)) {
+				$data['error'] = $this->error;
+			}
+
+			if (isset($_POST['product_id']) && ($_SERVER['REQUEST_METHOD'] != 'POST')) {
 				$product_model = $this->model->load('product');
-				$product_info = $product_model->getProduct($_GET['product_id']);
+				$product_info = $product_model->getProduct($_POST['product_id']);
 			}
 
 			if (isset($_POST['name'])) {
@@ -169,5 +173,31 @@
 
 		public function validateForm ()
 		{
+			if (!isset($_POST['name']) || mb_strlen($_POST['name']) < 2 || mb_strlen($_POST['name']) > 256 ){
+				$this->error['name'] = 'Название товара обязательно и должно быть от 2 до 256 символов';
+			}
+
+			if (isset($_POST['name']) && !filter_var($_POST['image'], FILTER_VALIDATE_URL)){
+				$this->error['name'] = 'Ссылка указана некорректно';
+			}
+
+			if (isset($_POST['price']) && !filter_var($_POST['price'], FILTER_SANITIZE_NUMBER_FLOAT)){
+				$this->error['price'] = 'Цена товара обязательна';
+			}
+
+			$user_model = $this->model->load('user');
+			$users = $user_model->getUsers();
+
+			if ($_POST['user_id']){
+				if (array_search($_POST['user_id'], array_column($users, 'user_id')) == false){
+					$this->error['user'] = 'Такого автора у нас нет';
+				}
+			} else {
+				$this->error['user'] = 'Необходимо выбрать автора';
+			}
+
+			if (!isset($_POST['name']) && !filter_var($_POST['image'], FILTER_VALIDATE_URL)){
+				$this->error['name'] = 'Ссылка указана некорректно';
+			}
 		}
 	}
